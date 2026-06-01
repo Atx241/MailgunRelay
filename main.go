@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"net/http"
 )
 
@@ -19,4 +20,11 @@ func relay(res http.ResponseWriter, req *http.Request) {
 	for k, v := range req.Header {
 		fmt.Print("[", k, "]: ", v, "\n")
 	}
+	fmt.Println("[BODY]:")
+	body, err := io.ReadAll(req.Body)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+	fmt.Println(string(body))
 }
